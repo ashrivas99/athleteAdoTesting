@@ -14,7 +14,7 @@ def login():
     return "login"
 
 
-# test to insert data to the data base
+# test to read data from the data base
 @login_service.route("/test")
 def test():
     user1 = database.db.athlete.find_one({"email": "ashrivas@tcd.ie"})
