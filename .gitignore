@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-backend\login_service\tutorials
+backend/login_service/tutorials
 
 # C extensions
 *.so
