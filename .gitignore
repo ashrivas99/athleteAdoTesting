@@ -1,9 +1,9 @@
+backend/login_service/tutorials
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
-backend/login_service/tutorials
 
 # C extensions
 *.so
