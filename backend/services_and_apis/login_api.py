@@ -18,15 +18,14 @@ def loginAthlete():
     athlete_db_login_info = database.db.athlete.find_one({"email": athlete_username})
 
     if athlete_db_login_info is None:
-        # return jsonify({"message": "User not found"})
-        abort(404)
+        return jsonify({"message": "User not found"}), 404
 
     athlete_db_login_info_password = athlete_db_login_info["password"]
 
     if athlete_password == athlete_db_login_info_password:
-        return jsonify({"message": "Login successful"})
+        return jsonify({"message": "Login successful"}), 200
     else:
-        abort(401)
+        return jsonify({"message": "Wrong password"}), 401
 
 
 @login_service.route("/loginAdo", methods=["POST"])
@@ -44,9 +43,9 @@ def loginAdo():
     ado_db_login_info_password = ado_db_login_info["password"]
 
     if ado_password == ado_db_login_info_password:
-        return jsonify({"message": "Login successful"})
+        return jsonify({"message": "Login successful"}), 200
     else:
-        abort(401)
+        return jsonify({"message": "Wrong password"}), 401
 
 
 if __name__ == "__main__":
