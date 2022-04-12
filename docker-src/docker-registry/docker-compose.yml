@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  registry:
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      - REGISTRY_HTTP_TLS_CERTIFICATE=./certs/registry.local.crt
+      - REGISTRY_HTTP_TLS_KEY=./certs/registry.local.key
+    volumes:
+      - ./registry:/var/lib/registry
+      - ./registry-config/config.yml:/etc/docker/registry/config.yml
+      - ./certs:/certs
