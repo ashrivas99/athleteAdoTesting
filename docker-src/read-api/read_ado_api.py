@@ -20,7 +20,7 @@ def getAthleteInfo():
 
     athlete_info = database.db.athlete.find_one({"email": athlete_email})
     if athlete_info is None:
-        abort(404)
+        return jsonify({"message": "Athlete not found"}), 404
     return_avails = {}
     ind = 0
     for item in athlete_info["availability"]:
@@ -41,9 +41,9 @@ def getAthleteInfo():
             ind += 1
 
     if athlete_info["ado_email"] != ado_username:
-        return "Access to athlete information not allowed"
+        return jsonify({"message": "Access to athlete information not allowed"}), 401
     else:
-        return jsonify(return_avails)
+        return jsonify(return_avails), 200
         # return return_avails
 
 
