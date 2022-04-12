@@ -12,7 +12,7 @@ def welcome():
     return "Welcome ADOs, please access /read to find information on an athlete"
 
 
-@read_service.route("/read", methods=["POST"])
+@read_service.route("/read", methods=["GET"])
 def getAthleteInfo():
     ado_requestinfo = request.get_json(force=True)
     ado_username = ado_requestinfo["ADO_email"]
@@ -36,7 +36,7 @@ def getAthleteInfo():
             ).timetuple()
         )
 
-        if item["time_slot_start"] < time.time():
+        if item["time_slot_start"] >= time.time():
             return_avails[ind] = item
             ind += 1
 
