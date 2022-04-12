@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  registry:
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  login:
+    image: 127.0.0.1:5000/login-api-service
+    build: login-api
+    ports: 
+      - "6060:5000"
+
+  read:
+    image: 127.0.0.1:5000/read-api-service
+    build: read-api
+    ports: 
+      - "7000:5000"
+
+  write:
+    image: 127.0.0.1:5000/write-api-service
+    build: write-api
+    ports: 
+      - "8000:5000"
