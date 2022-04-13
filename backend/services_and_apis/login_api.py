@@ -15,19 +15,21 @@ def loginAthlete():
     athlete_login_info = request.get_json(force=True)
     athlete_username = athlete_login_info["email"]
     athlete_password = athlete_login_info["password"]
-
-    print("checking cache\n \n \n \n Maya \n")
+   
     redis_client = redis.Redis(host='localhost', port=6379)
     athlete_db_login_info_password = redis_client.get(athlete_username)
+ 
     if athlete_db_login_info_password is None:
         print("checking database")
         athlete_db_login_info = database.db.athlete.find_one({"email": athlete_username})
-
-    if athlete_db_login_info is None:
-        # Return boolean false and error 404
-        return jsonify(False), 404
-
-    athlete_db_login_info_password = athlete_db_login_info["password"]
+        if athlete_db_login_info is None:
+            # Return boolean false and error 404
+            return jsonify(False), 404
+        athlete_db_login_info_password = athlete_db_login_info["password"]
+        redis_client.set(athlete_username, athlete_db_login_info_password)
+    
+    else :
+        athlete_db_login_info_password = athlete_db_login_info_password.decode("utf-8")
 
     if athlete_password == athlete_db_login_info_password:
         return jsonify(True), 200
