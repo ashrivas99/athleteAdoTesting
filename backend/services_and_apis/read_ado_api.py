@@ -21,8 +21,7 @@ def getAthleteInfo():
     athlete_info = database.db.athlete.find_one({"email": athlete_email})
     if athlete_info is None:
         abort(404)
-    return_avails = {}
-    ind = 0
+    return_avails = []
     for item in athlete_info["availability"]:
         # print(athlete_info["availability"][item])
         item["time_slot_start"] = time.mktime(
@@ -37,8 +36,7 @@ def getAthleteInfo():
         )
 
         if item["time_slot_start"] > time.time():
-            return_avails[ind] = item
-            ind += 1
+            return_avails.append(item)
 
     if athlete_info["ado_email"] != ado_username:
         return "Access to athlete information not allowed"
