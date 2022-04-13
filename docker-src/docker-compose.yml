@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+
+  login:
+    image: registry.local:5000/login-api-service
+    build: login-api
+    ports: 
+      - "6060:5000"
+    deploy:
+      replicas: 3
+
+  read:
+    image: registry.local:5000/read-api-service
+    build: read-api
+    ports: 
+      - "7000:5000"
+    deploy:
+      replicas: 5
+
+  write:
+    image: registry.local:5000/write-api-service
+    build: write-api
+    ports: 
+      - "8000:5000"
+    deploy:
+      replicas: 2
