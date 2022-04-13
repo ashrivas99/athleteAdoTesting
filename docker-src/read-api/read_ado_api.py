@@ -20,7 +20,7 @@ def getAthleteInfo():
 
     athlete_info = database.db.athlete.find_one({"email": athlete_email})
     if athlete_info is None:
-        return jsonify({"message": "Athlete not found"}), 404
+        abort(404)
     return_avails = {}
     ind = 0
     for item in athlete_info["availability"]:
@@ -36,14 +36,14 @@ def getAthleteInfo():
             ).timetuple()
         )
 
-        if item["time_slot_start"] >= time.time():
+        if item["time_slot_start"] > time.time():
             return_avails[ind] = item
             ind += 1
 
     if athlete_info["ado_email"] != ado_username:
-        return jsonify({"message": "Access to athlete information not allowed"}), 401
+        return "Access to athlete information not allowed"
     else:
-        return jsonify(return_avails), 200
+        return jsonify(return_avails)
         # return return_avails
 
 

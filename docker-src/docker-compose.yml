@@ -8,8 +8,7 @@ services:
     ports: 
       - "6060:5000"
     deploy:
-      placement:
-        constraints: [node.role == worker]
+      replicas: 3
 
   read:
     image: registry.local:5000/read-api-service
@@ -17,11 +16,12 @@ services:
     ports: 
       - "7000:5000"
     deploy:
-      placement:
-        constraints: [node.role == worker]
+      replicas: 5
 
   write:
     image: registry.local:5000/write-api-service
     build: write-api
     ports: 
       - "8000:5000"
+    deploy:
+      replicas: 2
