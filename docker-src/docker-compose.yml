@@ -1,7 +1,6 @@
 version: "3.9"
 
 services:
-
   login:
     image: registry.local:5000/login-api-service
     build: login-api
