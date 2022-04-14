@@ -54,7 +54,7 @@ def writeAvailability():
             return (
                 jsonify(
                     {
-                        "message": "timeslot is past cutoff",
+                        "message": "timeslot is too soon (in the next two days)",
                         "timeslot_failed": athlete_availability_list[idx],
                     }
                 ),
@@ -65,7 +65,7 @@ def writeAvailability():
         time_slot_constraint_satisfied = check_timeslot_gt_one_hour(
             time_slot_start, time_slot_end
         )
-
+        
         if not time_slot_constraint_satisfied:
             return (
                 jsonify(
@@ -104,19 +104,33 @@ def writeAvailability():
 
         if athlete_availability_db_search is not None:
             print("found existing availability, updating the availability")
-            database.db.athlete.update_one(
-                {
-                    "email": athlete_email,
-                    "availability.time_slot_start": time_slot_start_str,
-                },
-                {"$set": {"availability.$": athlete_availability_object}},
-            )
+            if athlete_availability["lat"] == "":
+                athlete_availability_db_search = database.db.athlete.update_one(
+                    {
+                        "email": athlete_email,
+                        "availability.time_slot_start": time_slot_start_str,
+                    },
+                    {"$pull": {"availability" : { "time_slot_start": time_slot_start_str}}},
+
+                )
+                return jsonify({"message": "athlete availability deleted"}), 200
+            else:
+                database.db.athlete.update_one(
+                    {
+                        "email": athlete_email,
+                        "availability.time_slot_start": time_slot_start_str,
+                    },
+                    {"$set": {"availability.$": athlete_availability_object}},
+                )
         else:
-            print("no existing availability found, adding new availability")
-            database.db.athlete.update_one(
-                {"email": athlete_email},
-                {"$push": {"availability": athlete_availability_object}},
-            )
+            if athlete_availability["lat"] == "":
+                return jsonify({"message": "No availability found to delete"}), 404
+            else:
+                print("no existing availability found, adding new availability")
+                database.db.athlete.update_one(
+                    {"email": athlete_email},
+                    {"$push": {"availability": athlete_availability_object}},
+                )
 
     return jsonify({"message": "athlete availability added"}), 200
 
