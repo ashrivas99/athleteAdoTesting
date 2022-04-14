@@ -44,7 +44,7 @@ def writeAvailability():
         return jsonify({"message": "athlete not found"}), 404
 
     # get _id from athlete_availability_info
-    athlete_availability_info_id = athlete_availability_info["_id"]
+    athlete_availability_info_id = athlete_db_email.get("_id")
 
     for idx, athlete_availability in enumerate(athlete_availability_list):
         time_slot_start = athlete_availability["datetime_start"]
