@@ -43,6 +43,9 @@ def writeAvailability():
     if athlete_db_email is None:
         return jsonify({"message": "athlete not found"}), 404
 
+    # get _id from athlete_availability_info
+    athlete_availability_info_id = athlete_availability_info["_id"]
+
     for idx, athlete_availability in enumerate(athlete_availability_list):
         time_slot_start = athlete_availability["datetime_start"]
         time_slot_end = athlete_availability["datetime_end"]
@@ -106,7 +109,7 @@ def writeAvailability():
             print("found existing availability, updating the availability")
             database.db.athlete.update_one(
                 {
-                    "email": athlete_email,
+                    "_id": athlete_availability_info_id,
                     "availability.time_slot_start": time_slot_start_str,
                 },
                 {"$set": {"availability.$": athlete_availability_object}},
@@ -114,7 +117,7 @@ def writeAvailability():
         else:
             print("no existing availability found, adding new availability")
             database.db.athlete.update_one(
-                {"email": athlete_email},
+                {"_id": athlete_availability_info_id},
                 {"$push": {"availability": athlete_availability_object}},
             )
 
