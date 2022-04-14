@@ -12,6 +12,8 @@ Then activate the virtual environment:
 
 ```
 source venv/bin/activate
+
+(. venv/scripts/activate on windows!)
 ```
 
 Then install all requirements:
