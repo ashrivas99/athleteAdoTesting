@@ -111,7 +111,6 @@ def writeAvailability():
                         "availability.time_slot_start": time_slot_start_str,
                     },
                     {"$pull": {"availability" : { "time_slot_start": time_slot_start_str}}},
-
                 )
                 return jsonify({"message": "athlete availability deleted"}), 200
             else:
@@ -122,6 +121,7 @@ def writeAvailability():
                     },
                     {"$set": {"availability.$": athlete_availability_object}},
                 )
+                return jsonify({"message": "athlete availability updated"}), 200
         else:
             if athlete_availability["lat"] == "":
                 return jsonify({"message": "No availability found to delete"}), 404
