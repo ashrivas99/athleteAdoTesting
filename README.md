@@ -22,7 +22,7 @@ Then install all requirements:
 pip install -r requirements.txt
 ```
 
-To run the login service, cd into backend\services_and_apis\login_api.py and run the following command:
+To run the login service, cd into backend\services_and_apis and run the following command:
 
 ```
 python3 login_api.py
