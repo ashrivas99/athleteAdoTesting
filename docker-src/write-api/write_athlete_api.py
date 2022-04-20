@@ -3,11 +3,15 @@ import database
 from datetime import datetime, timedelta
 import pandas as pd
 from pprint import pprint
+from flask_cors import CORS, cross_origin
 
 write_service = Flask(__name__)
 
+cors = CORS(write_service)
+write_service.config['CORS_HEADERS'] = 'Content-Type'
 
 @write_service.route("/")
+@cross_origin()
 def welcome():
     return "welcome to the write service for athletes"
 
@@ -33,6 +37,7 @@ def check_timeslot_gt_one_hour(time_slot_start, time_slot_end):
 
 
 @write_service.route("/writeAvailability", methods=["POST"])
+@cross_origin()
 def writeAvailability():
     athlete_availability_info = request.get_json(force=True)
     athlete_email = athlete_availability_info["email"]

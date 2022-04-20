@@ -3,16 +3,20 @@ from flask import Flask, request, jsonify, abort
 import datetime
 import database
 import time
+from flask_cors import CORS, cross_origin
 
 read_service = Flask(__name__)
-
+cors = CORS(read_service)
+read_service.config['CORS_HEADERS'] = 'Content-Type'
 
 @read_service.route("/")
+@cross_origin()
 def welcome():
     return "Welcome ADOs, please access /read to find information on an athlete"
 
 
 @read_service.route("/read", methods=["GET"])
+@cross_origin()
 def getAthleteInfo():
     ado_requestinfo = request.get_json(force=True)
     ado_username = ado_requestinfo["ADO_email"]

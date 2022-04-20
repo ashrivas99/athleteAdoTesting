@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify, abort
 import database
+from flask_cors import CORS, cross_origin
 
 login_service = Flask(__name__)
 
+cors = CORS(login_service)
+login_service.config['CORS_HEADERS'] = 'Content-Type'
 
 @login_service.route("/")
+@cross_origin()
 def welcome():
     return "welcome to login service. To login for athletes please use /loginAthlete, for ado's please use /loginAdo"
 
