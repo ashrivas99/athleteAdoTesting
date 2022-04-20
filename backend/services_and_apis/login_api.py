@@ -18,6 +18,7 @@ def welcome():
 
 
 @login_service.route("/loginAthlete", methods=["POST"])
+@cross_origin()
 def loginAthlete():
     athlete_login_info = request.get_json(force=True)
     athlete_username = athlete_login_info["email"]
@@ -45,6 +46,7 @@ def loginAthlete():
 
 
 @login_service.route("/loginAdo", methods=["POST"])
+@cross_origin()
 def loginAdo():
     ado_login_info = request.get_json(force=True)
     ado_username = ado_login_info["email"]
