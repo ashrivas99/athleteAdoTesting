@@ -22,12 +22,12 @@ def seed_athlete_collection(fake):
 
         gen_time_1_start = datetime.datetime.now(
             datetime.timezone.utc
-        ) + datetime.timedelta(hours=i)
+        ) + datetime.timedelta(days=3, hours=i)
         gen_time_1_end = gen_time_1_start + datetime.timedelta(hours=2)
 
         gen_time_2_start = datetime.datetime.now(
             datetime.timezone.utc
-        ) + datetime.timedelta(hours=i + 1)
+        ) + datetime.timedelta(days=3, hours=i + 1)
         gen_time_2_end = gen_time_2_start + datetime.timedelta(hours=3)
 
         if gen_athlete_email not in athlete_email_password_ado_dict:
